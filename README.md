@@ -64,17 +64,17 @@ GOOGLE_CLIENT_SECRET = ''
 
 ## Daftar Dependensi Utama
 
-| Paket                | Versi     | Keterangan                                    |
-|----------------------|-----------|-----------------------------------------------|
-| Django               | 5.2.6     | Framework web utama                           |
-| django-allauth       | 65.12.0   | Autentikasi & login sosial                    |
-| django-crispy-forms  | 2.4       | Membuat form Django lebih rapi                |
-| crispy-bootstrap5    | 2025.6    | Bootstrap 5 untuk crispy-forms                |
-| python-dotenv        | 1.1.1     | Memuat variabel lingkungan dari `.env`        |
-| django-redis         | 6.0.0     | Backend cache Redis untuk Django              |
-| pillow               | 11.3.0    | Pengolahan gambar                             |
-| redis                | 6.4.0     | Client Python untuk Redis                     |
-| requests             | 2.32.5    | Library HTTP requests                         |
+| Paket               | Versi   | Keterangan                             |
+| ------------------- | ------- | -------------------------------------- |
+| Django              | 5.2.6   | Framework web utama                    |
+| django-allauth      | 65.12.0 | Autentikasi & login sosial             |
+| django-crispy-forms | 2.4     | Membuat form Django lebih rapi         |
+| crispy-bootstrap5   | 2025.6  | Bootstrap 5 untuk crispy-forms         |
+| python-dotenv       | 1.1.1   | Memuat variabel lingkungan dari `.env` |
+| django-redis        | 6.0.0   | Backend cache Redis untuk Django       |
+| pillow              | 11.3.0  | Pengolahan gambar                      |
+| redis               | 6.4.0   | Client Python untuk Redis              |
+| requests            | 2.32.5  | Library HTTP requests                  |
 
 _Dependensi lain: asgiref, certifi, cffi, charset-normalizer, cryptography, idna, pip, pycparser, PyJWT, sqlparse, tzdata, urllib3_
 
@@ -90,3 +90,29 @@ python manage.py runserver
 ```
 
 Buka [http://127.0.0.1:8000/](http://127.0.0.1:8000/) di browser Anda.
+
+## Menjalankan dengan Docker
+
+Pastikan sudah menginstal [Docker Desktop](https://www.docker.com/products/docker-desktop/) di komputer Anda.
+
+### 1. Build image Docker
+
+```sh
+docker build -t django_blog .
+```
+
+### 2. Jalankan container
+
+```sh
+docker run --env-file .env -p 8000:8000 django_blog
+```
+
+### 3. Akses aplikasi
+
+Buka [http://127.0.0.1:8000/](http://127.0.0.1:8000/) di browser Anda.
+
+> **Catatan:**
+>
+> - Pastikan file `.env` sudah terisi dengan benar.
+> - Untuk pengembangan, Anda bisa menggunakan volume agar perubahan kode langsung terupdate di container.
+> - Pastikan sudah install WSL di docker
