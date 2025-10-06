@@ -91,28 +91,50 @@ python manage.py runserver
 
 Buka [http://127.0.0.1:8000/](http://127.0.0.1:8000/) di browser Anda.
 
-## Menjalankan dengan Docker
+## Menjalankan Redis dengan Docker
 
-Pastikan sudah menginstal [Docker Desktop](https://www.docker.com/products/docker-desktop/) di komputer Anda.
+Aplikasi ini menggunakan Redis sebagai backend cache. Jika Anda belum memiliki Redis yang berjalan di komputer, Anda bisa menjalankannya dengan Docker.
 
-### 1. Build image Docker
-
-```sh
-docker build -t django_blog .
-```
-
-### 2. Jalankan container
+### 1. Jalankan Redis dengan Docker
 
 ```sh
-docker run --env-file .env -p 8000:8000 django_blog
+docker run -d --name redis-blog -p 6379:6379 redis:7
 ```
 
-### 3. Akses aplikasi
+Perintah di atas akan:
+- Mengunduh image Redis versi 7 (jika belum ada)
+- Menjalankan Redis di background (opsi `-d`)
+- Membuka port 6379 agar bisa diakses aplikasi Django
 
-Buka [http://127.0.0.1:8000/](http://127.0.0.1:8000/) di browser Anda.
+### 2. Pastikan Redis Berjalan
 
-> **Catatan:**
->
-> - Pastikan file `.env` sudah terisi dengan benar.
-> - Untuk pengembangan, Anda bisa menggunakan volume agar perubahan kode langsung terupdate di container.
-> - Pastikan sudah install WSL di docker
+Cek dengan perintah berikut:
+
+```sh
+docker ps
+```
+
+Harus ada container bernama `redis-blog` yang statusnya "Up".
+
+### 3. Konfigurasi Django
+
+Pastikan pengaturan cache di `settings.py` sudah mengarah ke Redis, misalnya:
+
+```python
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+```
+
+---
+
+> **Catatan:**  
+> - Redis harus berjalan sebelum Anda menjalankan aplikasi Django.  
+> - Jika menggunakan Docker Compose, Anda bisa mengatur service Redis dan Django sekaligus.
+> - Memiliki WSL di docker atau laptop anda
