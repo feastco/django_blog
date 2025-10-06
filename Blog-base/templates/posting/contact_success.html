@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Success{% endblock %}
+
+{% block content %}
+<h1>Terimakasih, {{ nama }}!</h1>
+<p>Pesan Anda telah berhasil dikirim. Kami akan menghubungi Anda segera.</p>
+<a href="{% url 'index' %}" class="btn btn-primary">Kembali ke Beranda</a>
+{% endblock %}

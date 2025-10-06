@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block title%} Detail Posting {%endblock %} 
+{%block content %}
+<div class="container mt-3 mb-5 justify-content-center" style="max-width: 35rem; border-radius: 10px">
+ <img
+  src="{{ posting.image.url }}"
+  class="card-img-top"
+  alt="{{ posting.judul }}"
+  style="height: 350px; width: 100%; 
+  object-fit: contain; background: #f8f9fa; border-radius: 10px 10px 0 0;"
+/>
+  <div class="card-body">
+    <small class="text-muted">{{ posting.create_at }}</small>
+    <h5 class="card-title my-3">{{ posting.judul }}</h5>
+    <p class="badge bg-secondary">Penulis: {{ posting.penulis }}</p>
+    <p class="card-text">{{ posting.konten }}</p>
+    <a href="{% url 'index' %}" class="btn btn-success my-2">Kembali</a>
+    {% if user == posting.penulis or user.is_superuser %}
+    <a href="{% url 'update_post' posting.pk %}" class="btn btn-warning my-2">Edit</a>
+    <a href="{% url 'delete_post' posting.pk %}" class="btn btn-danger my-2">Hapus</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Search Results {% endblock %}
+
+{% block content %}
+
+{% if query %}
+  <h2 class="mb-3">Search Results for "{{ query }}"</h2>
+{% else %}
+  <h2 class="mb-3">Search Results</h2>
+{% endif %}
+
+{% if query_list %}
+<div class="row">
+  {% for posting in query_list %}
+  <div class="col-md-4 mb-4">
+    <div class="card h-100">
+      <img
+        src="{{ posting.image.url }}"
+        class="card-img-top"
+        alt="{{ posting.judul }}"
+        style="max-height: 200px; object-fit: cover; border-radius: 10px; max-width: 100%"
+      />
+      <div class="card-body">
+        <small class="text-muted">{{ posting.create_at }}</small>
+        <h5 class="card-title" style="my-3">{{ posting.judul }}</h5>
+        <p class="badge bg-secondary">Penulis: {{ posting.penulis }}</p>
+        <p class="card-text">{{ posting.konten|truncatechars:150 }}</p>
+        <a href="{% url 'detail' posting.id %}" class="btn btn-primary my-2">More</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No results found for "{{ query }}". Please try again with different keywords.</p>
+{% endif %}
+{% endblock %}

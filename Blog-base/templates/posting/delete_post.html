@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} Hapus Posting {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  {% if user.is_authenticated %}
+  <h2>Hapus Posting</h2>
+  <p>Apakah Anda yakin ingin menghapus posting ini?</p>
+  <div class="card mx-auto" style="max-width: 35rem">
+    <div class="card-body">
+      <h5 class="card-title">{{ object.judul }}</h5>
+      <p class="card-text">{{ object.konten|truncatechars:200 }}</p>
+      <form action="{% url 'delete_post' object.pk %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Hapus</button>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Batal</a>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+  <h3 class="mt-3">Atau edit postingan ini?</h3>
+  <h2>
+    <a href="{% url 'update_post' object.pk %}" class="btn btn-warning my-2"
+      >Edit
+    </a>
+  </h2>
+</div>
+{% endblock %}
