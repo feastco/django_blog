@@ -83,7 +83,7 @@ _Dependensi lain: asgiref, certifi, cffi, charset-normalizer, cryptography, idna
 ## Menjalankan Proyek
 
 ```sh
-python manage.py makemigration
+python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
